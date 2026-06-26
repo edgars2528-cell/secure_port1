@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Port Performance - BAAC Mae Taeng</title>
+    <!-- โหลดไลบรารีกราฟผ่าน CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --baac-green: #2d6a4f;
+            --baac-gold: #b7903c;
+            --silver: #a8a8a8;
+            --bronze: #cd7f32;
+            --white: #ffffff;
+        }
+
+        body { font-family: 'Sarabun', sans-serif; background-color: #f4f7f4; margin: 0; padding: 10px; }
+        .container { max-width: 1000px; margin: 0 auto; background: var(--white); padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 12px solid var(--baac-green); }
+        
+        .header { text-align: center; margin-bottom: 20px; }
+        .logo { width: 140px; height: auto; margin-bottom: 10px; }
+        h1 { color: var(--baac-green); margin: 5px 0; font-size: 24px; }
+        .subtitle { color: var(--baac-gold); font-weight: bold; font-size: 16px; }
+
+        /* Podium Top 3 */
+        .podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 10px; margin: 40px 0; min-height: 350px; flex-wrap: wrap; }
+        .podium-card { background: white; border-radius: 20px; padding: 15px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: relative; width: 190px; }
+        
+        .rank-1 { order: 2; border: 4px solid var(--baac-gold); min-height: 320px; z-index: 2; }
+        .rank-2 { order: 1; border: 3px solid var(--silver); min-height: 260px; }
+        .rank-3 { order: 3; border: 3px solid var(--bronze); min-height: 240px; }
+
+        .crown { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 35px; }
+        .badge { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border-radius: 50%; color: white; line-height: 40px; font-weight: bold; font-size: 20px; }
+        .bg-1 { background: var(--baac-gold); } .bg-2 { background: var(--silver); } .bg-3 { background: var(--bronze); }
+        
+        .photo-circle { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid #f8f8f8; }
+        .rank-1 .photo-circle { width: 140px; height: 140px; }
+        
+        .p-name { font-size: 14px; font-weight: bold; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .p-percent { font-size: 26px; font-weight: bold; color: var(--baac-green); }
+
+        /* Graph Area - เพิ่มความสูงเพื่อให้กราฟแสดงผล */
+        .chart-wrapper { position: relative; height: 500px; width: 100%; margin-bottom: 30px; background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+
+        /* Dropdown Selection */
+        .selector-box { background: #d8f3dc; padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: center; }
+        select { width: 100%; max-width: 500px; padding: 14px; font-size: 17px; border: 2px solid var(--baac-green); border-radius: 12px; cursor: pointer; }
+
+        /* Individual Detail */
+        .detail-card { display: none; flex-wrap: wrap; gap: 25px; padding: 25px; border: 2px solid var(--baac-green); border-radius: 20px; background: white; }
+        .detail-photo { width: 180px; height: 180px; border-radius: 15px; object-fit: cover; border: 4px solid var(--baac-green); }
+        .stat-item { background: #f8faf8; padding: 12px; border-radius: 12px; border-left: 5px solid var(--baac-green); margin-bottom: 10px; flex: 1; min-width: 200px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="logo ธ.ก.ส.jpg" alt="Logo BAAC" class="logo">
+        <h1>ผลการดำเนินงานจ่ายสินเชื่อ Secure Port</h1>
+        <div class="subtitle">ธ.ก.ส. สาขาแม่แตง | ข้อมูล ณ วันที่ 25 มิถุนายน 2569</div>
+    </div>
+
+    <!-- Podium Top 3 - ข้อมูลจริงจาก Secure Port -->
+    <div class="podium-container">
+        <!-- อันดับ 2:จีรวดี -->
+        <div class="podium-card rank-2">
+            <div class="badge bg-2">2</div>
+            <img src="น.ส.จิรวดี อภิวงศ์.png" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <div class="p-name">นางสาวจิรวดี อภิวงศ์</div>
+            <div class="p-percent">0.79%</div>
+        </div>
+        <!-- อันดับ 1: เฉลิมพล -->
+        <div class="podium-card rank-1">
+            <div class="crown">👑</div>
+            <div class="badge bg-1">1</div>
+            <img src="นายเฉลิมพล แสนพรมมา.jpg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <div class="p-name">นายเฉลิมพล แสนพรมมา</div>
+            <div class="p-percent">1.76%</div>
+        </div>
+        <!-- อันดับ 3: วรวรรณ -->
+        <div class="podium-card rank-3">
+            <div class="badge bg-3">3</div>
+            <img src="นางสาววรวรรณ เลาเงิน.jpeg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <div class="p-name">นางสาววรวรรณ เลาเงิน</div>
+            <div class="p-percent">0.48%</div>
+        </div>
+    </div>
+
+    <!-- กราฟผลงานของทุกคน -->
+    <div class="chart-wrapper">
+        <canvas id="secureChart"></canvas>
+    </div>
+
+    <!-- Dropdown List -->
+    <div class="selector-box">
+        <h3>เลือกรายชื่อพนักงาน (สินเชื่อ Secure Port)</h3>
+        <select id="staffSelect" onchange="updateDetail()">
+            <option value="">-- กรุณาเลือกชื่อพนักงาน --</option>
+        </select>
+    </div>
+
+    <div id="detailCard" class="detail-card">
+        <div style="text-align:center;">
+            <img id="pImg" src="" class="detail-photo" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <h2 id="pName" style="margin:15px 0; color: var(--baac-green);"></h2>
+        </div>
+        <div style="flex:1;">
+            <div class="stat-item"><strong>ร้อยละ ผลงาน:</strong> <span id="pPercent" style="font-size:22px; font-weight:bold; color:var(--baac-gold);"></span></div>
+            <div class="stat-item"><strong>ผลงานปัจจุบัน:</strong> <span id="pResult"></span> ลบ.</div>
+            <div class="stat-item"><strong>ห่างเป้าหมาย:</strong> <span id="pGap"></span> ลบ.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ข้อมูลจากแหล่งข้อมูล "secure.pdf" [2-4]
+    const secureData = [
+        { n: "นายเฉลิมพล แสนพรมมา", pc: 1.76, r: 5.58, g: 6.04, rk: 1, img: "นายเฉลิมพล แสนพรมมา.jpg" },
+        { n: "นางสาวจิรวดี อภิวงศ์", pc: 0.79, r: 3.39, g: 6.10, rk: 2, img: "น.ส.จิรวดี อภิวงศ์.png" },
+        { n: "นางสาววรวรรณ เลาเงิน", pc: 0.25, r: 6.82, g: 6.12, rk: 3, img: "นางสาววรวรรณ เลาเงิน.jpeg" },
+        { n: "นางสาวกาลดากร คามรัตนภูมิ", pc: 0.25, r: 9.01, g: 6.13, rk: 4, img: "นางสาวกาลดากร คามรัตนภูมิ.jpeg" },
+        { n: "นายธีระวิทย์ พรายแย้ม", pc: 0.02, r: 0.27, g: 6.15, rk: 5, img: "นายธีระวิทย์ พรายแย้ม.jpeg" },
+        { n: "นางสาวสุจิตรา คำกัมพล", pc: -0.42, r: 11.47, g: 6.18, rk: 6, img: "น.ส.สุจิตรา คำกัมพล.jpeg" },
+        { n: "นายอดุลย์ มีจีรกุล", pc: -0.52, r: 10.90, g: 6.18, rk: 7, img: "นายอดุลย์ มีจีรกุล.jpeg" },
+        { n: "นางสาวอารีย์วัล แสนสนิท", pc: -1.78, r: 10.69, g: 6.26, rk: 8, img: "น.ส.อารีย์วัล แสนสนิท.jpeg" },
+        { n: "นายรณกฤต มหินธนาธิกุล", pc: -2.34, r: 15.20, g: 6.29, rk: 9, img: "นายรณกฤต มหินธนาธิกุล.jpg" }
+    ];
+
+    // ฟังก์ชันเริ่มทำงานเมื่อโหลดหน้าเสร็จ
+    document.addEventListener('DOMContentLoaded', () => {
+        populateDropdown();
+        createSecureChart();
+    });
+
+    function populateDropdown() {
+        const select = document.getElementById('staffSelect');
+        secureData.forEach((s, i) => {
+            let option = document.createElement('option');
+            option.value = i;
+            option.textContent = `${s.rk}. ${s.n}`;
+            select.appendChild(option);
+        });
+    }
+
+    function createSecureChart() {
+        const ctx = document.getElementById('secureChart').getContext('2d');
+        if (!ctx) return;
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: secureData.map(s => s.n.replace('นางสาว', 'นส.')),
+                datasets: [{
+                    label: 'ร้อยละ ผลงาน',
+                    data: secureData.map(s => s.pc),
+                    backgroundColor: secureData.map(s => s.pc > 0 ? '#2d6a4f' : '#d90429'),
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { x: { grid: { display: false } } }
+            }
+        });
+    }
+
+    function updateDetail() {
+        const i = document.getElementById('staffSelect').value;
+        const card = document.getElementById('detailCard');
+        if (i === "") { card.style.display = 'none'; return; }
+        
+        const d = secureData[i];
+        document.getElementById('pImg').src = d.img;
+        document.getElementById('pName').textContent = d.n;
+        document.getElementById('pPercent').textContent = d.pc + "%";
+        document.getElementById('pResult').textContent = d.r.toFixed(2);
+        document.getElementById('pGap').textContent = d.g.toFixed(2);
+        card.style.display = 'flex';
+    }
+</script>
+</body>
+</html>
