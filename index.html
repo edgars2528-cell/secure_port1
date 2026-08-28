@@ -64,32 +64,34 @@
     <button class="topic-btn" onclick="window.location.href='https://edgars2528-cell.github.io/secure_port1/' " style="padding: 10px 20px; border-radius: 20px; cursor: pointer;">สินเชื่อ Secure Port</button>
 </div>
         <h1 style="color: var(--baac-green); margin: 10px 0;">ผลการปฏิบัติงานจ่ายสินเชื่อ Secure loan  </h1>
-        <p style="color: var(--baac-gold); font-weight: bold;">ธ.ก.ส. สาขาแม่แตง ประจำวันที่ 22 กรกฎาคม 2569</p>
+        <p style="color: var(--baac-gold); font-weight: bold;">ธ.ก.ส. สาขาแม่แตง ประจำวันที่ 27 สิงหาคม 2569</p>
     </div>
 
     <!-- Podium Top 3 - ข้อมูลจริงจาก Secure Port -->
     <div class="podium-container">
-        <!-- อันดับ 2:วรวรรณ -->
+        <!-- อันดับ 2:เฉลิมพล -->
         <div class="podium-card rank-2">
+            <div class="white_medium_star">🥈</div>
             <div class="badge bg-2">2</div>
-            <img src="นางสาววรวรรณ เลาเงิน.jpeg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
-            <div class="p-name">นางสาววรวรรณ เลาเงิน</div>
-            <div class="p-percent">2.68%</div>
+            <img src="นายเฉลิมพล แสนพรมมา.jpg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <div class="p-name">นายเฉลิมพล แสนพรมมา</div>
+            <div class="p-percent">3.08%</div>
         </div>
-        <!-- อันดับ 1: เฉลิมพล -->
+        <!-- อันดับ 1: วรวรรณ -->
         <div class="podium-card rank-1">
             <div class="crown">👑</div>
             <div class="badge bg-1">1</div>
-            <img src="นายเฉลิมพล แสนพรมมา.jpg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
-            <div class="p-name">นายเฉลิมพล แสนพรมมา</div>
-            <div class="p-percent">3.04%</div>
+            <img src="นางสาววรวรรณ เลาเงิน.jpeg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <div class="p-name">นางสาววรวรรณ เลาเงิน</div>
+            <div class="p-percent">11.70%</div>
         </div>
-        <!-- อันดับ 3: จิรวดี -->
+        <!-- อันดับ 3: กาลดากร -->
         <div class="podium-card rank-3">
+            <div class="white_medium_star">🥉</div>
             <div class="badge bg-3">3</div>
-            <img src="น.ส.อารีย์วัล แสนสนิท.jpeg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
-            <div class="p-name">นางสาวอารีย์วัล แสนสนิท</div>
-            <div class="p-percent">1.63%</div>
+            <img src="นางสาวกาลดากร คามรัตนภูมิ.jpeg" class="photo-circle" onerror="this.src='logo ธ.ก.ส.jpg'">
+            <div class="p-name">นางสาวกาลดากร คามรัตนภูมิ</div>
+            <div class="p-percent">2.80%</div>
         </div>
     </div>
 
@@ -114,7 +116,7 @@
         <div style="flex:1;">
             <div class="stat-item"><strong>ร้อยละ ผลงาน:</strong> <span id="pPercent" style="font-size:22px; font-weight:bold; color:var(--baac-gold);"></span></div>
             <div class="stat-item"><strong>ผลงานปัจจุบัน:</strong> <span id="pResult"></span> ลบ.</div>
-            <div class="stat-item"><strong>ห่างเป้าหมาย:</strong> <span id="pGap"></span> ลบ.</div>
+            <div class="stat-item"><strong>เติบโตจากต้นปี:</strong> <span id="pGap"></span> ลบ.</div>
         </div>
     </div>
 </div>
@@ -122,15 +124,15 @@
 <script>
     // ข้อมูลจากแหล่งข้อมูล "secure.pdf" [2-4]
     const secureData = [
-        { n: "นายเฉลิมพล แสนพรมมา", pc: 3.04, r: 5.66, g: 5.96, rk: 1, img: "นายเฉลิมพล แสนพรมมา.jpg" },
-        { n: "นางสาววรวรรณ เลาเงิน", pc: 2.68, r: 6.95, g: 5.99, rk: 2, img: "นางสาววรวรรณ เลาเงิน.jpeg" },
-        { n: "นางสาวอารีย์วัล แสนสนิท", pc: 1.63, r: 10.90, g: 6.05, rk: 3, img: "น.ส.อารีย์วัล แสนสนิท.jpeg" },
-        { n: "นางสาวจิรวดี อภิวงศ์", pc: 0.78, r: 3.39, g: 6.10, rk: 4, img: "น.ส.จิรวดี อภิวงศ์.png" },
-        { n: "นางสาวกาลดากร คามรัตนภูมิ", pc: 0.48, r: 9.03, g: 6.12, rk: 5, img: "นางสาวกาลดากร คามรัตนภูมิ.jpeg" },
-        { n: "นายธีระวิทย์ พรายแย้ม", pc: -0.01, r: 0.27, g: 6.15, rk: 6, img: "นายธีระวิทย์ พรายแย้ม.jpeg" },
-        { n: "นางสาวสุจิตรา คำกัมพล", pc: -0.26, r: 11.48, g: 6.17, rk: 7, img: "น.ส.สุจิตรา คำกัมพล.jpeg" },
-        { n: "นายอดุลย์ มีจีรกุล", pc: -0.40, r: 10.90, g: 6.17, rk: 8, img: "นายอดุลย์ มีจีรกุล.jpeg" },
-        { n: "นายรณกฤต มหินธนาธิกุล", pc: -4.34, r: 15.08, g: 6.42, rk: 9, img: "นายรณกฤต มหินธนาธิกุล.jpg" }
+        { n: "นางสาววรวรรณ เลาเงิน", pc: 11.70, r: 7.51, g: 0.72, rk: 1, img: "นางสาววรวรรณ เลาเงิน.jpeg" },
+        { n: "นายเฉลิมพล แสนพรมมา", pc: 3.08, r: 5.66, g: 0.19, rk: 2, img: "นายเฉลิมพล แสนพรมมา.jpg" },
+        { n: "นางสาวกาลดากร คามรัตนภูมิ", pc: 2.80, r: 9.17, g: 0.17, rk: 3, img: "นางสาวกาลดากร คามรัตนภูมิ.jpeg" },
+        { n: "นายอดุลย์ มีจีรกุล", pc: 2.52, r: 11.08, g: 0.15, rk: 4, img: "นายอดุลย์ มีจีรกุล.jpeg" },
+        { n: "นางสาวอารีย์วัล แสนสนิท", pc: 1.59, r: 10.90, g: 0.10, rk: 5, img: "น.ส.อารีย์วัล แสนสนิท.jpeg" },
+        { n: "นางสาวจิรวดี อภิวงศ์", pc: 0.37, r: 3.37, g: 0.02, rk: 6, img: "น.ส.จิรวดี อภิวงศ์.png" },
+        { n: "นายธีระวิทย์ พรายแย้ม", pc: -0.05, r: 0.27, g: 0.00, rk: 7, img: "นายธีระวิทย์ พรายแย้ม.jpeg" },
+        { n: "นางสาวสุจิตรา คำกัมพล", pc: -1.85, r: 11.39, g: -0.11, rk: 8, img: "น.ส.สุจิตรา คำกัมพล.jpeg" },
+        { n: "นายรณกฤต มหินธนาธิกุล", pc: -4.89, r: 15.04, g: -0.30, rk: 9, img: "นายรณกฤต มหินธนาธิกุล.jpg" }
     ];
 
     // ฟังก์ชันเริ่มทำงานเมื่อโหลดหน้าเสร็จ
